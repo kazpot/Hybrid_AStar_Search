@@ -2,6 +2,8 @@
 g++ -o hastar.exe main.cpp hybrid_breadth_first.cpp hybrid_breadth_first.h -std=c+11
 
 # Output
+
+```bash
 Finding path through grid:
 0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0
 0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0
@@ -161,4 +163,4 @@ theta 215.691
 x 15.3173
 y 15.8734
 theta 221.462
-
+```
