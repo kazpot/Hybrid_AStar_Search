@@ -30,7 +30,7 @@ int HBF::Idx(double float_num) {
 }
 
 
-std::vector<HBF::maze_s> HBF::Expand(HBF::maze_s state) {
+std::vector<HBF::MazeS> HBF::Expand(HBF::MazeS state) {
   int g = state.g;
   double x = state.x;
   double y = state.y;
@@ -38,7 +38,7 @@ std::vector<HBF::maze_s> HBF::Expand(HBF::maze_s state) {
 
   int g2 = g+1;
 
-  std::vector<HBF::maze_s> next_states;
+  std::vector<HBF::MazeS> next_states;
   for(double delta_i = -35; delta_i < 40; delta_i += 5)
   {
 
@@ -52,7 +52,7 @@ std::vector<HBF::maze_s> HBF::Expand(HBF::maze_s state) {
     double x2 = x + SPEED * cos(theta2);
     double y2 = y + SPEED * sin(theta2);
 
-    HBF::maze_s state2;
+    HBF::MazeS state2;
     state2.g = g2;
     state2.x = x2;
     state2.y = y2;
@@ -63,13 +63,13 @@ std::vector<HBF::maze_s> HBF::Expand(HBF::maze_s state) {
   return next_states;
 }
 
-std::vector<HBF::maze_s> HBF::ReconstructPath(std::vector<std::vector<std::vector<HBF::maze_s>>> came_from, std::vector<double> start, HBF::maze_s final)
+std::vector<HBF::MazeS> HBF::ReconstructPath(std::vector<std::vector<std::vector<HBF::MazeS>>> came_from, std::vector<double> start, HBF::MazeS final)
 {
-    std::vector<maze_s> path = {final};
+    std::vector<MazeS> path = {final};
     
     int stack = ThetaToStackNumber(final.theta);
 
-    maze_s current = came_from[stack][Idx(final.x)][Idx(final.y)];
+    MazeS current = came_from[stack][Idx(final.x)][Idx(final.y)];
     
     stack = ThetaToStackNumber(current.theta);
     
@@ -88,21 +88,21 @@ std::vector<HBF::maze_s> HBF::ReconstructPath(std::vector<std::vector<std::vecto
 
 }
 
-HBF::maze_path HBF::Search(std::vector<std::vector<int>> grid, std::vector<double> start, std::vector<int> goal)
+HBF::MazePath HBF::Search(std::vector<std::vector<int>> grid, std::vector<double> start, std::vector<int> goal)
 {
     /*
      * Working Implementation of breadth first search.
      * Does NOT use a heuristic and as a result this is pretty inefficient.
      * Try modifying this algorithm into hybrid A* by adding heuristics appropriately.
     */
-    std::vector<std::vector<std::vector<maze_s>>> closed(NUM_THETA_CELLS, std::vector<std::vector<maze_s>>(grid[0].size(), std::vector<maze_s>(grid.size())));
+    std::vector<std::vector<std::vector<MazeS>>> closed(NUM_THETA_CELLS, std::vector<std::vector<MazeS>>(grid[0].size(), std::vector<MazeS>(grid.size())));
     std::vector<std::vector<std::vector<int>>> closed_value(NUM_THETA_CELLS, std::vector<std::vector<int>>(grid[0].size(), std::vector<int>(grid.size())));
-    std::vector<std::vector<std::vector<maze_s>>> came_from(NUM_THETA_CELLS, std::vector<std::vector<maze_s>>(grid[0].size(), std::vector<maze_s>(grid.size())));
+    std::vector<std::vector<std::vector<MazeS>>> came_from(NUM_THETA_CELLS, std::vector<std::vector<MazeS>>(grid[0].size(), std::vector<MazeS>(grid.size())));
     double theta = start[2];
     int stack = ThetaToStackNumber(theta);
     int g = 0;
 
-    maze_s state;
+    MazeS state;
     state.g = g;
     state.x = start[0];
     state.y = start[1];
@@ -112,13 +112,13 @@ HBF::maze_path HBF::Search(std::vector<std::vector<int>> grid, std::vector<doubl
     came_from[stack][Idx(state.x)][Idx(state.y)] = state;
 
     int total_closed = 1;
-    std::vector<maze_s> opened = {state};
+    std::vector<MazeS> opened = {state};
     while(!opened.empty())
     {
         sort(opened.begin(), opened.end());
 
-        //grab first elment
-        maze_s next = opened[0];
+        //grab first element
+        MazeS next = opened[0];
 
         //pop first element
         opened.erase(opened.begin());
@@ -129,7 +129,7 @@ HBF::maze_path HBF::Search(std::vector<std::vector<int>> grid, std::vector<doubl
         if(Idx(x) == goal[0] && Idx(y) == goal[1])
         {
             std::cout << "found path to goal in " << total_closed << " expansions" <<std::endl;
-            maze_path path;
+            MazePath path;
             path.closed = closed;
             path.came_from = came_from;
             path.final = next;
@@ -137,7 +137,7 @@ HBF::maze_path HBF::Search(std::vector<std::vector<int>> grid, std::vector<doubl
 
         }
 
-        std::vector<maze_s> next_state = Expand(next);
+        std::vector<MazeS> next_state = Expand(next);
 
         for(auto &i : next_state)
         {
@@ -158,7 +158,7 @@ HBF::maze_path HBF::Search(std::vector<std::vector<int>> grid, std::vector<doubl
                 int h2 = HEURISTIC[Idx(x2)][Idx(y2)];
                 int f2 = g2 + h2;
 
-                maze_s state2;
+                MazeS state2;
                 state2.f = f2;
                 state2.g = g2;
                 state2.x = x2;
@@ -176,7 +176,7 @@ HBF::maze_path HBF::Search(std::vector<std::vector<int>> grid, std::vector<doubl
     }
 
     std::cout << "no valid path." << std::endl;
-    HBF::maze_path path;
+    HBF::MazePath path;
     path.closed = closed;
     path.came_from = came_from;
     path.final = state;

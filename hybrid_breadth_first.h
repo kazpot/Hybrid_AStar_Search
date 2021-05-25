@@ -14,7 +14,7 @@ public:
     double SPEED = 1.45;
     double LENGTH = 0.5;
 
-    std::vector<std::vector<int>>HEURISTIC =
+    std::vector<std::vector<int>> HEURISTIC =
     {
             {30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,},
             {29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,},
@@ -34,26 +34,25 @@ public:
             {15,14,13,12,11,10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0,},
     };
 
-    struct maze_s
+    struct MazeS
     {
         int f;
-        int g;  // iteration
+        int g;
         double x;
         double y;
         double theta;
         
-        bool operator<(const maze_s& a) const
+        bool operator<(const MazeS &a) const
         {
             return f < a.f;
         }
     };
 
-    struct maze_path
+    struct MazePath
     {
-        std::vector<std::vector<std::vector<maze_s>>> closed;
-        std::vector<std::vector<std::vector<maze_s>>> came_from;
-        maze_s final;
-
+        std::vector<std::vector<std::vector<MazeS>>> closed;
+        std::vector<std::vector<std::vector<MazeS>>> came_from;
+        MazeS final;
     };
 
     HBF();
@@ -64,11 +63,11 @@ public:
 
     int Idx(double float_num);
 
-    std::vector<maze_s> Expand(maze_s state);
+    std::vector<MazeS> Expand(MazeS state);
 
-    maze_path Search(std::vector<std::vector<int> > grid, std::vector<double> start, std::vector<int> goal);
+    MazePath Search(std::vector<std::vector<int>> grid, std::vector<double> start, std::vector<int> goal);
 
-    std::vector<maze_s> ReconstructPath(std::vector<std::vector<std::vector<maze_s>>> came_from, std::vector<double> start, HBF::maze_s final);
+    std::vector<MazeS> ReconstructPath(std::vector<std::vector<std::vector<MazeS>>> came_from, std::vector<double> start, HBF::MazeS final);
 };
 
 #endif

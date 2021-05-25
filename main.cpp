@@ -5,10 +5,6 @@
 int X = 1;
 int _ = 0;
 
-int NUM_THETA_CELLS = 90;
-double SPEED = 1.45;
-double LENGTH = 0.5;
-
 std::vector<std::vector<int> > MAZE = {
     {_,X,X,_,_,_,_,_,_,_,X,X,_,_,_,_,},
     {_,X,X,_,_,_,_,_,_,X,X,_,_,_,_,_,},
@@ -47,13 +43,13 @@ int main()
     }
 
     HBF hbf;
-    HBF::maze_path get_path = hbf.Search(GRID,START,GOAL);
-    std::vector<HBF::maze_s> show_path = hbf.ReconstructPath(get_path.came_from, START, get_path.final);
+    HBF::MazePath get_path = hbf.Search(GRID,START,GOAL);
+    std::vector<HBF::MazeS> show_path = hbf.ReconstructPath(get_path.came_from, START, get_path.final);
 
     std::cout << "show path from start to finish" << std::endl;
     for(int i = show_path.size()-1; i >= 0; i--)
     {
-        HBF::maze_s step = show_path[i];
+        HBF::MazeS step = show_path[i];
         std::cout << "##### step " << step.g << " #####" << std::endl;
         std::cout << "x " << step.x << std::endl;
         std::cout << "y " << step.y << std::endl;
