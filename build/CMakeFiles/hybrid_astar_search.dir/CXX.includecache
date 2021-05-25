@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/nakagawa/ex/Hybrid_AStar_Search/hybrid_breadth_first.h
+iostream
+-
+sstream
+-
+fstream
+-
+cmath
+-
+vector
+-
+
+/Users/nakagawa/ex/Hybrid_AStar_Search/main.cpp
+iostream
+-
+vector
+-
+hybrid_breadth_first.h
+/Users/nakagawa/ex/Hybrid_AStar_Search/hybrid_breadth_first.h
+

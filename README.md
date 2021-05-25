@@ -1,7 +1,13 @@
-# Build
-g++ -o hastar.exe main.cpp hybrid_breadth_first.cpp hybrid_breadth_first.h -std=c+11
+## Build
+```
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+```
 
-# Output
+
+## Output
 
 ```bash
 Finding path through grid:
