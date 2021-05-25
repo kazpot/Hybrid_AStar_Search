@@ -35,7 +35,7 @@ int main()
     for (int i = 0; i < GRID.size(); i++)
     {
         std::cout << GRID[i][0];
-        for(int j = 1; j < GRID[0].size(); j++)
+        for (int j = 1; j < GRID[0].size(); j++)
         {
             std::cout << "," << GRID[i][j];
         }
@@ -47,7 +47,7 @@ int main()
     std::vector<HBF::MazeS> show_path = hbf.ReconstructPath(get_path.came_from, START, get_path.final);
 
     std::cout << "show path from start to finish" << std::endl;
-    for(int i = show_path.size()-1; i >= 0; i--)
+    for (int i = show_path.size()-1; i >= 0; i--)
     {
         HBF::MazeS step = show_path[i];
         std::cout << "##### step " << step.g << " #####" << std::endl;
